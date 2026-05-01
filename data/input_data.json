@@ -1,0 +1,13 @@
+{
+  "location": {
+    "latitude": 25.7617,
+    "longitude": -80.1918,
+    "name": "Miami, FL"
+  },
+  "radius_km": 100,
+  "min_saffir_simpson_category": 4,
+  "observation_window": {
+    "start_year": 1900,
+    "end_year": 2024
+  }
+}
