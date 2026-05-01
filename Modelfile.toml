@@ -1,0 +1,38 @@
+name = "hurricane_frequency"
+description = "Fits a homogeneous Poisson annual landfall rate (lambda) for hurricanes of a given Saffir-Simpson category or higher within a radius of a target location, using HURDAT2 historical track data."
+image = "model-home/hurricane_frequency:latest"
+run = "docker run --rm -v \"$PWD/run:/run\" ${IMAGE} ${ARGS} > run/hurricane_frequency.output.json"
+args = ["{input:hurricane_frequency_query}"]
+
+[[inputs]]
+name = "hurricane_frequency_query"
+
+[inputs.schema]
+type = "object"
+required = ["location"]
+properties.location.type = "object"
+properties.location.description = "Target location with latitude and longitude (and optional name)."
+properties.radius_km.type = "number"
+properties.radius_km.description = "Search radius around target in kilometres (default 100)."
+properties.min_saffir_simpson_category.type = "integer"
+properties.min_saffir_simpson_category.minimum = 1
+properties.min_saffir_simpson_category.maximum = 5
+properties.min_saffir_simpson_category.description = "Minimum Saffir-Simpson category to count (default 1)."
+properties.observation_window.type = "object"
+properties.observation_window.description = "Year range over which to count events; defaults 1900..latest year in HURDAT2."
+
+[[outputs]]
+name = "hurricane_frequency"
+
+[outputs.schema]
+type = "object"
+required = ["lambda_annual", "probability_at_least_one_per_year", "historical_event_count", "observation_years", "expected_events_in_3yr_term", "metadata"]
+properties.lambda_annual.type = "number"
+properties.lambda_annual.description = "Method-of-moments Poisson rate (events per year)."
+properties.probability_at_least_one_per_year.type = "number"
+properties.probability_at_least_one_per_year.description = "1 - exp(-lambda)."
+properties.historical_event_count.type = "integer"
+properties.observation_years.type = "integer"
+properties.expected_events_in_3yr_term.type = "number"
+properties.expected_events_in_3yr_term.description = "3 * lambda_annual; cat bonds typically have 3-year terms."
+properties.metadata.type = "object"
