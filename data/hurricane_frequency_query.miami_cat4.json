@@ -1,0 +1,5 @@
+{
+  "location": {"latitude": 25.76, "longitude": -80.19, "name": "Miami"},
+  "radius_km": 100,
+  "min_saffir_simpson_category": 4
+}
