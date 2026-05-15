@@ -4,6 +4,13 @@ image = "model-home/hurricane_frequency:latest"
 run = "docker run --rm -v \"$PWD/run:/run\" ${IMAGE} ${ARGS} > run/hurricane_frequency.output.json"
 args = ["{input:hurricane_frequency_query}"]
 
+[runner]
+entrypoint = "runner.py"
+language = "python"
+
+[build]
+dockerfile = "Dockerfile"
+
 [[inputs]]
 name = "hurricane_frequency_query"
 
