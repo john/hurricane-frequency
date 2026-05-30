@@ -1,5 +1,5 @@
-name = "hurricane_frequency"
-description = "Fits a homogeneous Poisson annual landfall rate (lambda) for hurricanes of a given Saffir-Simpson category or higher within a radius of a target location, using HURDAT2 historical track data."
+name = "Hurricane Landfall Rate"
+description = "Fits a homogeneous Poisson annual landfall rate (lambda) for hurricanes at or above a given Saffir-Simpson category within a radius of a target location, from HURDAT2 historical track data. The rate rescales Insured Loss Layer's AAI in the catastrophe-bond fan-out."
 image = "model-home/hurricane_frequency:latest"
 run = "docker run --rm -v \"$PWD/run:/run\" ${IMAGE} ${ARGS} > run/hurricane_frequency.output.json"
 args = ["{input:hurricane_frequency_query}"]
