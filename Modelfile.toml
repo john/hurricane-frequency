@@ -17,16 +17,40 @@ name = "hurricane_frequency_query"
 [inputs.schema]
 type = "object"
 required = ["location"]
+
+# The `default`s below seed the auto-generated "example to paste" in the Model
+# Home UI. Without them the example is a type-shaped skeleton — an empty
+# location object and a zero radius — which the runner rejects (latitude must
+# be a number in [-90, 90]; radius must be positive). The values mirror
+# data/hurricane_frequency_query.miami_cat4.json, the query used in the
+# catastrophe-bond fan-out flow, so the example runs as-is.
+
 properties.location.type = "object"
 properties.location.description = "Target location with latitude and longitude (and optional name)."
+properties.location.required = ["latitude", "longitude"]
+properties.location.properties.latitude.type = "number"
+properties.location.properties.latitude.minimum = -90
+properties.location.properties.latitude.maximum = 90
+properties.location.properties.longitude.type = "number"
+properties.location.properties.longitude.minimum = -180
+properties.location.properties.longitude.maximum = 180
+properties.location.properties.name.type = "string"
+properties.location.properties.name.description = "Optional label, echoed back in the output metadata."
+properties.location.default = { latitude = 25.76, longitude = -80.19, name = "Miami" }
 properties.radius_km.type = "number"
+properties.radius_km.exclusiveMinimum = 0
 properties.radius_km.description = "Search radius around target in kilometres (default 100)."
+properties.radius_km.default = 100
 properties.min_saffir_simpson_category.type = "integer"
 properties.min_saffir_simpson_category.minimum = 1
 properties.min_saffir_simpson_category.maximum = 5
 properties.min_saffir_simpson_category.description = "Minimum Saffir-Simpson category to count (default 1)."
+properties.min_saffir_simpson_category.default = 4
 properties.observation_window.type = "object"
 properties.observation_window.description = "Year range over which to count events; defaults 1900..latest year in HURDAT2."
+properties.observation_window.properties.start_year.type = "integer"
+properties.observation_window.properties.end_year.type = "integer"
+properties.observation_window.default = { start_year = 1900, end_year = 2024 }
 
 [[outputs]]
 name = "hurricane_frequency"
